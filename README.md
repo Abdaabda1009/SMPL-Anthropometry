@@ -12,14 +12,17 @@ Measure the SMPL/SMPLX body models and visualize the measurements and landmarks.
 You can use a docker container to facilitate running the code. Run in terminal:
 
 ```bash
-cd docker
-sh build.sh
-sh docker_run.sh CODE_PATH
+docker build -t measure-engine .
+docker run -p 8100:8100 -v /path/to/models:/app/data:ro measure-engine
 ```
 
-by adjusting the `CODE_PATH` to the `SMPL-Anthropometry` directory location. This creates a `smpl-anthropometry-container` container.
+See the `Dockerfile` header comment for the full run command (env vars, model
+mount layout, etc.), and `Dockerfile.gpu` for a CUDA-enabled variant.
 
-If you do not want to use a docker container, you can also just install the necessary packages from `docker/requirements.txt` into your own enviroment.
+If you do not want to use a docker container, install the CPU-only torch
+wheel (see the `Dockerfile` for the exact command) then `pip install -r
+requirements.txt` into your own environment, and run the API with
+`./run_api.sh`.
 
 Next, provide the body models (SMPL or SMPLX) and:
 1. put the `SMPL_{GENDER}.pkl` (MALE, FEMALE and NEUTRAL) models into the `data/smpl` folder
@@ -52,7 +55,7 @@ Then, there are two ways of using the code for measuring a body model depending 
 ```python
 measurer.from_body_model(gender=gender, shape=betas) 
 ```
-
+´´´
 2. Define the body model using the N x 3 vertices `verts` (N=6890 if SMPL, and 10475 if SMPLX):
 
 ```python

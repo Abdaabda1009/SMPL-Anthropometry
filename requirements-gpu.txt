@@ -1,0 +1,27 @@
+# Runtime dependencies for the GPU image (Dockerfile.gpu).
+#
+# Same as requirements.txt, minus torch: the pytorch/pytorch base image
+# already ships a CUDA-matched torch build. `pip install -r` on top of it
+# would see torch in the requirements and — since PyPI's default index only
+# carries the CPU wheel under that name — could silently replace the GPU
+# build with a CPU one. Omitting the line avoids that entirely; keep this
+# file's other pins in sync with requirements.txt by hand when they change.
+
+# --- web layer ---
+fastapi==0.139.2
+uvicorn[standard]==0.51.0
+python-multipart==0.0.32      # required by FastAPI for UploadFile/Form
+pydantic==2.13.4
+python-dotenv==1.1.0          # loads .env into os.environ (see measurement_engine/config.py)
+
+# --- model + geometry ---
+numpy==1.23.5                 # pinned: newer numpy breaks smplx 0.1.26
+smplx==0.1.26
+trimesh==3.15.1
+networkx==3.4.2               # trimesh.repair.fix_normals
+scipy==1.10.0
+pillow==12.3.0                # trimesh texture handling on .glb
+
+# --- overlays (overlay=true) + CLI tools (fit_mesh.py, measure.py --visualize) ---
+plotly==5.10.0
+pandas==1.5.3

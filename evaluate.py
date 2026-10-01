@@ -25,32 +25,3 @@ def evaluate_mae(gt_measurements,estim_measurements):
         print("Returning empty dict!")
 
     return MAE
-
-
-if __name__ == "__main__":
-
-    import torch
-    import pandas as pd
-    from measure import MeasureSMPL
-    from measurement_definitions import MeasurementDefinitions
-
-    smpl_path = "/SMPL-Anthropometry/data/SMPL"
-    
-    measurer1 = MeasureSMPL(smpl_path=smpl_path)
-    betas1 = torch.empty((1,10)).normal_(mean=0,std=1)
-    measurer1.from_smpl(gender="MALE", shape=betas1)
-
-    measurer2 = MeasureSMPL(smpl_path=smpl_path)
-    betas2 = torch.empty((1,10)).normal_(mean=0,std=1)
-    measurer2.from_smpl(gender="MALE", shape=betas2)
-
-
-    measurement_names = MeasurementDefinitions.possible_measurements
-    measurer1.measure(measurement_names)
-    measurer2.measure(measurement_names)
-
-    
-    MAE = evaluate_mae(measurer1.measurements,measurer2.measurements)    
-    mae_table = pd.DataFrame({"Measurement":MAE.keys(),
-                              "MAE(cm)": MAE.values()})
-    print(mae_table)

@@ -3,3 +3,12 @@ __pycache__/*
 data/*/*.pkl
 data/*/point_segmentation_meshcapade.json
 visualizeMeasurements (EXPERIMENTING).ipynb
+.DS_Store
+data/smpl/models/
+glb/
+fit_overlay*.html
+
+# real env files (secrets like API_KEY); .env_example stays tracked
+.env
+.env.*
+!.env_example

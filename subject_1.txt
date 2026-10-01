@@ -1,0 +1,31 @@
+SubjectId	abdominalextensiondepthsitting	acromialheight	acromionradialelength	anklecircumference	axillaheight	balloffootcircumference	balloffootlength	biacromialbreadth	bicepscircumferenceflexed	bicristalbreadth	bideltoidbreadth	bimalleolarbreadth	bitragionchinarc	bitragionsubmandibulararc	bizygomaticbreadth	buttockcircumference	buttockdepth	buttockheight	buttockkneelength	buttockpopliteallength	calfcircumference	cervicaleheight	chestbreadth	chestcircumference	chestdepth	chestheight	crotchheight	crotchlengthomphalion	crotchlengthposterioromphalion	earbreadth	earlength	earprotrusion	elbowrestheight	eyeheightsitting	footbreadthhorizontal	footlength	forearmcenterofgriplength	forearmcircumferenceflexed	forearmforearmbreadth	forearmhandlength	functionalleglength	handbreadth	handcircumference	handlength	headbreadth	headcircumference	headlength	heelanklecircumference	heelbreadth	hipbreadth	hipbreadthsitting	iliocristaleheight	interpupillarybreadth	interscyei	interscyeii	kneeheightmidpatella	kneeheightsitting	lateralfemoralepicondyleheight	lateralmalleolusheight	lowerthighcircumference	mentonsellionlength	neckcircumference	neckcircumferencebase	overheadfingertipreachsitting	palmlength	poplitealheight	radialestylionlength	shouldercircumference	shoulderelbowlength	shoulderlength	sittingheight	sleevelengthspinewrist	sleeveoutseam	span	stature	suprasternaleheight	tenthribheight	thighcircumference	thighclearance	thumbtipreach	tibialheight	tragiontopofhead	trochanterionheight	verticaltrunkcircumferenceusa	waistbacklength	waistbreadth	waistcircumference	waistdepth	waistfrontlengthsitting	waistheightomphalion	weightkg	wristcircumference	wristheight	Gender	Date	Installation	Component	Branch	PrimaryMOS	SubjectsBirthLocation	SubjectNumericRace	Ethnicity	DODRace	Age	Heightin	Weightlbs	WritingPreference
+10037	231	1282	301	204	1180	222	177	373	315	263	466	65	338	301	141	1011	223	836	587	476	360	1336	274	922	245	1095	759	557	310	35	65	16	220	713	91	246	316	265	517	432	1028	75	182	184	141	548	191	314	69	345	388	966	645	363	399	435	496	447	55	404	118	335	368	1268	113	362	235	1062	327	148	803	809	513	1647	1560	1280	1013	622	174	736	430	110	844	1488	406	295	850	217	345	942	657	152	756	Female	5-Oct-10	Fort Hood	Regular Army	Combat Support	92Y	Germany	2		2	26	61	142	Right hand
+
+
+
+
+
+predicted from measurment-engine 
+
+A,head circumference,54.40 cm
+B,neck circumference,32.59 cm
+C,shoulder to crotch height,57.23 cm
+D,chest circumference,97.48 cm
+E,waist circumference,82.75 cm
+F,hip circumference,102.58 cm
+G,wrist right circumference,15.70 cm
+H,bicep right circumference,29.19 cm
+I,forearm right circumference,24.14 cm
+J,arm right length,48.67 cm
+K,inside leg height,68.63 cm
+L,thigh left circumference,51.21 cm
+M,calf left circumference,35.29 cm
+N,ankle left circumference,21.97 cm
+O,shoulder breadth,29.48 cm
+P,height,156.00 cm
+,arm left length,46.96 cm
+,back length,35.83 cm
+,knee left circumference,36.97 cm
+,sleeve length,49.34 cm
+,torso length,41.06 cm
+,under bust circumference,82.43 cm

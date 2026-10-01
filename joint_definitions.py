@@ -110,7 +110,7 @@ def get_joint_regressor(body_model_type, body_model_root, gender="MALE", num_the
     Return:
     :param model.J_regressor: torch.tensor (23,N) used to 
                               multiply with body model to get 
-                              joint locations
+                              joint location
     '''
 
     model = smplx.create(model_path=body_model_root, 

@@ -1,0 +1,22 @@
+# Runtime dependencies for the Measurement Engine API (api.py).
+# Install the CPU-only torch wheel first (see Dockerfile), then this file.
+
+# --- web layer ---
+fastapi==0.139.2
+uvicorn[standard]==0.51.0
+python-multipart==0.0.32      # required by FastAPI for UploadFile/Form
+pydantic==2.13.4
+python-dotenv==1.1.0          # loads .env into os.environ (see measurement_engine/config.py)
+
+# --- model + geometry ---
+torch==2.2.2
+numpy==1.23.5                 # pinned: newer numpy breaks smplx 0.1.26
+smplx==0.1.26
+trimesh==3.15.1
+networkx==3.4.2               # trimesh.repair.fix_normals
+scipy==1.10.0
+pillow==12.3.0                # trimesh texture handling on .glb
+
+# --- overlays (overlay=true) + CLI tools (fit_mesh.py, measure.py --visualize) ---
+plotly==5.10.0
+pandas==1.5.3

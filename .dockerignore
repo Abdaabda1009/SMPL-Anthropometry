@@ -1,0 +1,15 @@
+# keep the build context small: models are mounted at runtime, not copied
+data/
+glb/
+assets/
+docker/
+__pycache__/
+*.pyc
+.git/
+.claude/
+.DS_Store
+*.html
+*.csv
+*.md
+*.ipynb
+env_depoly.yml

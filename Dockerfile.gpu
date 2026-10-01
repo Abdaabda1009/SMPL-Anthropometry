@@ -1,0 +1,59 @@
+# Measurement Engine API — GPU-enabled image (CUDA via the pytorch/pytorch
+# base image). For the CPU-only image, see Dockerfile; that one is what's
+# actually validated today (see ACCURACY_REPORT.md / this repo's own testing).
+#
+# WHAT THIS ACTUALLY ACCELERATES TODAY: only /measure/shape (measure.py's
+# set_shape() forward pass) and model loading, via TORCH_DEVICE=cuda. The
+# expensive part — fit_mesh.py's multi-minute registration behind
+# /measure/mesh — is still CPU-only: that loop creates its own tensors
+# (target points, pose/shape/scale params, the sampling generator) with no
+# device placement, and fit_mesh.py's build_model() deliberately pins itself
+# to "cpu" so a half-migrated GPU model doesn't crash on the first
+# cross-device op. See build_model()'s docstring in fit_mesh.py for the full
+# list of what a real fit() GPU migration needs — do that as its own change,
+# validated against real GPU hardware, before expecting /measure/mesh to
+# actually get faster from this image.
+#
+# Model files are NOT baked in (size + SMPL-X licence). Mount them read-only:
+#   docker build -f Dockerfile.gpu -t measure-engine-gpu .
+#   docker run --gpus all -p 8100:8100 -v /srv/smplx-models:/app/data:ro \
+#       -e API_KEY=change-me -e TORCH_DEVICE=cuda measure-engine-gpu
+# The mounted dir must contain smplx/SMPLX_{MALE,FEMALE,NEUTRAL}.pkl and
+# smplx/smplx_body_parts_2_faces.json (and smpl/... if serving model_type=smpl).
+#
+# Match this image's CUDA/cuDNN tag to the host driver you'll actually run
+# on; this pin is a reasonable default, not verified against specific
+# hardware — check `nvidia-smi` on the target VM before deploying.
+FROM pytorch/pytorch:2.2.2-cuda12.1-cudnn8-runtime
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    TORCH_DEVICE=cuda
+
+WORKDIR /app
+
+# requirements-gpu.txt is requirements.txt minus the `torch==` line — see
+# that file's header for why reinstalling torch here would be actively
+# harmful, not just redundant.
+COPY requirements-gpu.txt .
+RUN pip install -r requirements-gpu.txt
+
+COPY api.py fit_mesh.py measure.py utils.py measurement_definitions.py \
+     landmark_definitions.py joint_definitions.py visualize.py ./
+COPY measurement_engine/ ./measurement_engine/
+
+RUN useradd --system --uid 1000 app && mkdir -p /app/data && chown app /app
+USER app
+
+EXPOSE 8100
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s \
+    CMD python -c "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8100/health')"
+
+# Still ONE worker: job state lives in process memory (measurement_engine/jobs.py),
+# unrelated to CPU vs GPU. MAX_WORKERS (concurrent fits) is a separate knob —
+# its "each needs ~2GB RAM" sizing guidance is CPU-fit-specific and doesn't
+# transfer to GPU memory/throughput; re-tune it once fit() actually runs on
+# GPU, against real measurements, not a guess.
+CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8100", \
+     "--workers", "1", "--timeout-keep-alive", "75"]

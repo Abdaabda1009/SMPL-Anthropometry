@@ -62,7 +62,18 @@ SMPLX_LANDMARK_INDICES = {"HEAD_TOP": 8976,
                     "LOW_LEFT_HIP": 4112, 
                     "LEFT_THIGH": 3577,
                     "LEFT_CALF": 3732,
-                    "LEFT_ANKLE": 5880
+                    "LEFT_ANKLE": 5880,
+
+                    # added for under_bust/knee/sleeve_length measurements.
+                    # no equivalent CAESAR landmark exists for these on SMPLX,
+                    # so they were found by nearest-surface-vertex to the
+                    # relevant joint (LEFT_KNEE, RIGHT_ELBOW) or by
+                    # interpolating between existing landmarks (UNDER_BUST),
+                    # then verified against the face segmentation body parts
+                    # they land in (see find_landmarks.py-style approach).
+                    "LEFT_KNEE": 3639,
+                    "RIGHT_ELBOW": 7026,
+                    "UNDER_BUST": 3855,
                     }
 
 SMPLX_LANDMARK_INDICES["HEELS"] = (SMPLX_LANDMARK_INDICES["LEFT_HEEL"], 

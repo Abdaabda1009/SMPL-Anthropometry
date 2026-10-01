@@ -50,7 +50,13 @@ MEASUREMENT_TYPES = {
         "arm length (shoulder to elbow)": MeasurementType.LENGTH,
         "arm length (spine to wrist)": MeasurementType.LENGTH,
         "crotch height": MeasurementType.LENGTH,
-        "Hip circumference max height": MeasurementType.LENGTH
+        "Hip circumference max height": MeasurementType.LENGTH,
+
+        "under bust circumference": MeasurementType.CIRCUMFERENCE,
+        "knee left circumference": MeasurementType.CIRCUMFERENCE,
+        "torso length": MeasurementType.LENGTH,
+        "back length": MeasurementType.LENGTH,
+        "sleeve length": MeasurementType.LENGTH,
     }
 
 class SMPLMeasurementDefinitions():
@@ -116,14 +122,27 @@ class SMPLMeasurementDefinitions():
                      SMPL_LANDMARK_INDICES["HEELS"]
                     ),
                 # FIXME: implement geodesic distance for this measurement
-                "arm length (spine to wrist)": 
+                "arm length (spine to wrist)":
                     (
-                    #  SMPL_LANDMARK_INDICES["SHOULDER_TOP"], 
+                    #  SMPL_LANDMARK_INDICES["SHOULDER_TOP"],
                     #  SMPL_LANDMARK_INDICES["LEFT_WRIST"]
                         SMPL_LANDMARK_INDICES["Cervicale"],
                         SMPL_LANDMARK_INDICES["Rt. Acromion"],
                         SMPL_LANDMARK_INDICES["Rt. Humeral Lateral Epicn"],
                         SMPL_LANDMARK_INDICES["Rt. Ulnar Styloid"]
+                    ),
+                "torso length":
+                    (SMPL_LANDMARK_INDICES["SHOULDER_TOP"],
+                     SMPL_LANDMARK_INDICES["BELLY_BUTTON"]
+                    ),
+                "back length":
+                    (SMPL_LANDMARK_INDICES["SHOULDER_TOP"],
+                     SMPL_LANDMARK_INDICES["BACK_BELLY_BUTTON"]
+                    ),
+                "sleeve length":
+                    (SMPL_LANDMARK_INDICES["Rt. Acromion"],
+                     SMPL_LANDMARK_INDICES["Rt. Humeral Lateral Epicn"],
+                     SMPL_LANDMARK_INDICES["Rt. Ulnar Styloid"]
                     ),
                }
 
@@ -227,9 +246,22 @@ class SMPLXMeasurementDefinitions():
                     (SMPLX_LANDMARK_INDICES["LOW_LEFT_HIP"], 
                      SMPLX_LANDMARK_INDICES["LEFT_ANKLE"]
                     ),
-                "shoulder breadth": 
-                    (SMPLX_LANDMARK_INDICES["LEFT_SHOULDER"], 
+                "shoulder breadth":
+                    (SMPLX_LANDMARK_INDICES["LEFT_SHOULDER"],
                      SMPLX_LANDMARK_INDICES["RIGHT_SHOULDER"]
+                    ),
+                "torso length":
+                    (SMPLX_LANDMARK_INDICES["SHOULDER_TOP"],
+                     SMPLX_LANDMARK_INDICES["BELLY_BUTTON"]
+                    ),
+                "back length":
+                    (SMPLX_LANDMARK_INDICES["SHOULDER_TOP"],
+                     SMPLX_LANDMARK_INDICES["BACK_BELLY_BUTTON"]
+                    ),
+                "sleeve length":
+                    (SMPLX_LANDMARK_INDICES["RIGHT_SHOULDER"],
+                     SMPLX_LANDMARK_INDICES["RIGHT_ELBOW"],
+                     SMPLX_LANDMARK_INDICES["RIGHT_WRIST"]
                     ),
                }
 
@@ -254,24 +286,30 @@ class SMPLXMeasurementDefinitions():
         
         "wrist right circumference":{"LANDMARKS":["RIGHT_WRIST"],
                                     "JOINTS":["right_wrist","right_elbow"]}, # different from SMPL
-        
+
         "bicep right circumference":{"LANDMARKS":["RIGHT_BICEP"],
                                     "JOINTS":["right_shoulder","right_elbow"]},
 
         "forearm right circumference":{"LANDMARKS":["RIGHT_FOREARM"],
                                         "JOINTS":["right_elbow","right_wrist"]},
-        
+
         "thigh left circumference":{"LANDMARKS":["LEFT_THIGH"],
                                     "JOINTS":["pelvis","spine3"]},
-        
+
         "calf left circumference":{"LANDMARKS":["LEFT_CALF"],
                                     "JOINTS":["pelvis","spine3"]},
 
         "ankle left circumference":{"LANDMARKS":["LEFT_ANKLE"],
-                                    "JOINTS":["pelvis","spine3"]},      
-                    
+                                    "JOINTS":["pelvis","spine3"]},
+
+        "under bust circumference":{"LANDMARKS":["UNDER_BUST"],
+                                    "JOINTS":["pelvis","spine3"]},
+
+        "knee left circumference":{"LANDMARKS":["LEFT_KNEE"],
+                                    "JOINTS":["pelvis","spine3"]},
+
                     }
-    
+
     possible_measurements = list(LENGTHS.keys()) + list(CIRCUMFERENCES.keys())
 
     CIRCUMFERENCE_TO_BODYPARTS = {
@@ -286,4 +324,6 @@ class SMPLXMeasurementDefinitions():
         "thigh left circumference": "leftUpLeg",
         "calf left circumference": "leftLeg",
         "ankle left circumference": "leftLeg",
+        "under bust circumference": ["spine1","spine2"],
+        "knee left circumference": ["leftUpLeg","leftLeg"],
     }
